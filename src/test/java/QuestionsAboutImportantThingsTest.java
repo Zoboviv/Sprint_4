@@ -8,6 +8,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -15,9 +16,17 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
 public class QuestionsAboutImportantThingsTest {
+    public WebDriver getWebDriver(boolean useFirefox) {
+        if (useFirefox) {
+            return new FirefoxDriver();
+        } else {
+            return new ChromeDriver();
+        }
+    }
+    WebDriver driver = getWebDriver(true);
+
     private final String n;
     private final String text;
-    WebDriver driver = new ChromeDriver();
 
     public QuestionsAboutImportantThingsTest(String n, String text) {
         this.n = n;

@@ -1,6 +1,8 @@
 package PageObject;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static org.junit.Assert.assertTrue;
 
@@ -32,8 +34,10 @@ public class OrderScooter {
     private final By dateField = By.xpath(".//input[@placeholder='* Когда привезти самокат']");
     //локатор срок
     private final By termButton = By.className("Dropdown-placeholder");
-    //локатор цвет
-    private final By colorCheckBox = By.id("black");
+    //локатор цвет черный
+    private final By colorCheckBoxBlack = By.id("black");
+    //локатор цвет серый
+    private final By colorCheckBoxGrey = By.id("grey");
     //локатор комментарий
     private final  By commentField = By.xpath(".//input[@placeholder='Комментарий для курьера']");
     //локатор заказать (конец)
@@ -42,6 +46,14 @@ public class OrderScooter {
     private final By confirmationWindow = By.className("Order_ModalHeader__3FDaJ");
     //локатор "Да" в окне "Хотите оформить заказ?"
     private final By buttonYesConfirmationWindow = By.xpath(".//div[@class='Order_Modal__YZ-d3']//button[text()='Да']");
+    //локатор окна "Заказ оформлен"
+    private final By endConfirmationWindow = By.className("Order_Modal__YZ-d3");
+    //локатор кнопки "Посмотреть статус"
+    private final By buttonSeeStatus = By.xpath(".//button[text()='Посмотреть статус']");
+    //локатор окна статус заказа
+    private final By windowTrackOrderColumns = By.className("Track_OrderColumns__2r_1F");
+
+
 
     public void clickButtonOrderDown() {
         WebElement element = driver.findElement(buttonOrderDown);
@@ -89,8 +101,11 @@ public class OrderScooter {
         driver.findElement(By.xpath(".//div[@class='Dropdown-option'][text()='сутки']")).click();
     }
 
-    public void setColorCheckBox() {
-        driver.findElement(colorCheckBox).click();
+    public void setColorCheckBoxBlack() {
+        driver.findElement(colorCheckBoxBlack).click();
+    }
+    public void setColorCheckBoxGrey() {
+        driver.findElement(colorCheckBoxGrey).click();
     }
 
     public void setComment(String comment) {
@@ -107,6 +122,23 @@ public class OrderScooter {
 
     public void clickButtonYesConfirmationWindow() {
         driver.findElement(buttonYesConfirmationWindow).click();
+    }
+
+    public void checkEndConfirmationWindow() {
+        new WebDriverWait(driver, 3)
+                .until(ExpectedConditions.visibilityOfElementLocated(endConfirmationWindow));
+        assertTrue(driver.findElement(endConfirmationWindow).isDisplayed());
+    }
+
+    public void clickButtonSeeStatus() {
+        new WebDriverWait(driver, 3)
+                .until(ExpectedConditions.visibilityOfElementLocated(buttonSeeStatus));
+        driver.findElement(buttonSeeStatus).click();
+    }
+    public void checkWindowTrackOrderColumns() {
+        new WebDriverWait(driver, 3)
+                .until(ExpectedConditions.visibilityOfElementLocated(windowTrackOrderColumns));
+        assertTrue(driver.findElement(windowTrackOrderColumns).isDisplayed());
     }
 
 }

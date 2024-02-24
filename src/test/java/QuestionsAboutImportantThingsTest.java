@@ -1,4 +1,3 @@
-import PageObject.QuestionsAboutImportantThings;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -6,14 +5,21 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.concurrent.TimeUnit;
 
 @RunWith(Parameterized.class)
 public class QuestionsAboutImportantThingsTest {
     private final String n;
     private final String text;
     WebDriver driver = new ChromeDriver();
+
     public QuestionsAboutImportantThingsTest(String n, String text) {
         this.n = n;
         this.text = text;
@@ -48,7 +54,11 @@ public class QuestionsAboutImportantThingsTest {
     }
     @Test
     public void checkQuestionsAboutImportantThings(){
-        QuestionsAboutImportantThings.clickQuestion(n);
+        WebElement element = driver.findElement(By.id("accordion__heading-" + n));
+        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element);
+        driver.findElement(By.id("accordion__heading-" + n)).click();
+        new WebDriverWait(driver, 3)
+                .until(ExpectedConditions.visibilityOfElementLocated(By.id("accordion__panel-" + n)));
         Assert.assertEquals(driver.findElement(By.id("accordion__panel-" + n)).getText(), text);
     }
 

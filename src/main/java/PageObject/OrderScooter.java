@@ -1,47 +1,51 @@
 package PageObject;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
+
+import static org.junit.Assert.assertTrue;
 
 public class OrderScooter {
-    private static WebDriver driver;
+    public static WebDriver driver;
+
     //конструктор класса
-    public OrderScooter(WebDriver driver){
-        this.driver = driver;
+    public OrderScooter(WebDriver driver) {
+        OrderScooter.driver = driver;
     }
 
     //локатор Заказать вверху
-    private By buttonOrderUp = By.xpath(".//div[@class='Header_Header__214zg']//button[text()='Заказать']");
+    private final By buttonOrderUp = By.xpath(".//div[@class='Header_Header__214zg']//button[text()='Заказать']");
     //локатор Заказать внизу
-    private By buttonOrderDown = By.xpath(".//div[@class='Home_RoadMap__2tal_']//button[text()='Заказать']");
+    private final By buttonOrderDown = By.xpath(".//div[@class='Home_RoadMap__2tal_']//button[text()='Заказать']");
     //локатор Имя
-    private By nameField = By.xpath(".//input[@placeholder='* Имя']");
+    private final By nameField = By.xpath(".//input[@placeholder='* Имя']");
     //локатор Фамилия
-    private By surnameField = By.xpath(".//input[@placeholder='* Фамилия']");
+    private final By surnameField = By.xpath(".//input[@placeholder='* Фамилия']");
     //локатор Адрес
-    private By addressField = By.xpath(".//input[@placeholder='* Адрес: куда привезти заказ']");
+    private final By addressField = By.xpath(".//input[@placeholder='* Адрес: куда привезти заказ']");
     //локатор Станция метро
-    private By metroField = By.xpath(".//input[@placeholder='* Станция метро']");
+    private final By metroField = By.xpath(".//input[@placeholder='* Станция метро']");
     //локатор Телефон
-    private By phoneField = By.xpath(".//input[@placeholder='* Телефон: на него позвонит курьер']");
+    private final By phoneField = By.xpath(".//input[@placeholder='* Телефон: на него позвонит курьер']");
     //локатор Далее
-    private By nextButton = By.className("Button_Button__ra12g Button_Middle__1CSJM");
+    private final By nextButton = By.xpath(".//button[text()='Далее']");
     //локатор дата
-    private By dateField = By.xpath(".//input[@placeholder='* Когда привезти самокат']");
+    private final By dateField = By.xpath(".//input[@placeholder='* Когда привезти самокат']");
     //локатор срок
-    private By termButton = By.className("Dropdown-placeholder");
+    private final By termButton = By.className("Dropdown-placeholder");
     //локатор цвет
-    private By colorCheckBox = By.id("black");
+    private final By colorCheckBox = By.id("black");
     //локатор комментарий
-    private By commentField = By.xpath(".//input[@placeholder='Комментарий для курьера']");
+    private final  By commentField = By.xpath(".//input[@placeholder='Комментарий для курьера']");
     //локатор заказать (конец)
-    private By buttonOrderEnd = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
+    private final By buttonOrderEnd = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
     //локатор окна "Хотите оформить заказ?"
-    private By confirmationWindow = By.className("Order_ModalHeader__3FDaJ");
+    private final By confirmationWindow = By.className("Order_ModalHeader__3FDaJ");
     //локатор "Да" в окне "Хотите оформить заказ?"
-    private By buttonYesConfirmationWindow = By.xpath(".//div[@class='Order_Modal__YZ-d3']//button[text()='Да']");
+    private final By buttonYesConfirmationWindow = By.xpath(".//div[@class='Order_Modal__YZ-d3']//button[text()='Да']");
 
-    public void clickbuttonOrderDown() {
+    public void clickButtonOrderDown() {
+        WebElement element = driver.findElement(buttonOrderDown);
+        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element);
         driver.findElement(buttonOrderDown).click();
     }
 
@@ -54,14 +58,55 @@ public class OrderScooter {
     }
 
     public void setSurname(String surname) {
+
         driver.findElement(surnameField).sendKeys(surname);
     }
+
     public void setAddress(String address) {
         driver.findElement(addressField).sendKeys(address);
     }
 
-    public void setMetro(String address) {
-        driver.findElement(metroField).sendKeys(address);
+    public void setMetro(String metro) {
+        driver.findElement(metroField).sendKeys(metro);
+        driver.findElement(By.className("select-search__select")).click();
+    }
+
+    public void setPhone(String phone) {
+        driver.findElement(phoneField).sendKeys(phone);
+    }
+
+    public void clickNextButton() {
+        driver.findElement(nextButton).click();
+    }
+
+    public void setDate(String date) {
+        driver.findElement(dateField).sendKeys(date);
+        driver.findElement(dateField).sendKeys(Keys.ENTER);
+    }
+
+    public void setTerm() {
+        driver.findElement(termButton).click();
+        driver.findElement(By.xpath(".//div[@class='Dropdown-option'][text()='сутки']")).click();
+    }
+
+    public void setColorCheckBox() {
+        driver.findElement(colorCheckBox).click();
+    }
+
+    public void setComment(String comment) {
+        driver.findElement(commentField).sendKeys(comment);
+    }
+
+    public void clickButtonOrderEnd() {
+        driver.findElement(buttonOrderEnd).click();
+    }
+
+    public void checkConfirmationWindow() {
+        assertTrue(driver.findElement(confirmationWindow).isDisplayed());
+    }
+
+    public void clickButtonYesConfirmationWindow() {
+        driver.findElement(buttonYesConfirmationWindow).click();
     }
 
 }

@@ -1,5 +1,4 @@
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +10,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
 public class QuestionsAboutImportantThingsTest {
@@ -57,7 +58,7 @@ public class QuestionsAboutImportantThingsTest {
         driver.findElement(By.id("accordion__heading-" + n)).click();
         new WebDriverWait(driver, 3)
                 .until(ExpectedConditions.visibilityOfElementLocated(By.id("accordion__panel-" + n)));
-        Assert.assertEquals(driver.findElement(By.id("accordion__panel-" + n)).getText(), text);
+        assertEquals(driver.findElement(By.id("accordion__panel-" + n)).getText(), text);
     }
 
 }

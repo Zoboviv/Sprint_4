@@ -17,7 +17,7 @@ public class OrderScooterTest {
             return new ChromeDriver();
         }
     }
-    WebDriver driver = getWebDriver(true);
+    WebDriver driver = getWebDriver(false);//true для FirefoxDriver
     private final String name;
     private final String surname;
     private final String address;

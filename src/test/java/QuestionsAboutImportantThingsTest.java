@@ -23,7 +23,7 @@ public class QuestionsAboutImportantThingsTest {
             return new ChromeDriver();
         }
     }
-    WebDriver driver = getWebDriver(true);
+    WebDriver driver = getWebDriver(false);//true для FirefoxDriver
 
     private final String n;
     private final String text;

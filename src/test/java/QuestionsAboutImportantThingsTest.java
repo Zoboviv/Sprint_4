@@ -1,29 +1,10 @@
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import static org.junit.Assert.assertEquals;
+import page_object.QuestionsAboutImportantThings;
 
 @RunWith(Parameterized.class)
-public class QuestionsAboutImportantThingsTest {
-    public WebDriver getWebDriver(boolean useFirefox) {
-        if (useFirefox) {
-            return new FirefoxDriver();
-        } else {
-            return new ChromeDriver();
-        }
-    }
-    WebDriver driver = getWebDriver(false);//true для FirefoxDriver
+public class QuestionsAboutImportantThingsTest extends AncestorTest {
 
     private final String n;
     private final String text;
@@ -32,15 +13,6 @@ public class QuestionsAboutImportantThingsTest {
         this.n = n;
         this.text = text;
 
-    }
-    @Before
-    public void setUp(){
-        driver.get("https://qa-scooter.praktikum-services.ru/");
-    }
-
-    @After
-    public void tearDown(){
-        driver.quit();
     }
 
     @Parameterized.Parameters
@@ -62,12 +34,9 @@ public class QuestionsAboutImportantThingsTest {
     }
     @Test
     public void checkQuestionsAboutImportantThings(){
-        WebElement element = driver.findElement(By.id("accordion__heading-" + n));
-        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element);
-        driver.findElement(By.id("accordion__heading-" + n)).click();
-        new WebDriverWait(driver, 3)
-                .until(ExpectedConditions.visibilityOfElementLocated(By.id("accordion__panel-" + n)));
-        assertEquals(driver.findElement(By.id("accordion__panel-" + n)).getText(), text);
+        QuestionsAboutImportantThings questionsAboutImportantThings = new QuestionsAboutImportantThings(driver);
+        questionsAboutImportantThings.clickQuestions(n);
+        questionsAboutImportantThings.checkAnswer(n, text);
     }
 
 }

@@ -1,4 +1,4 @@
-package PageObject;
+package page_object;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -43,16 +43,17 @@ public class OrderScooter {
     //локатор заказать (конец)
     private final By buttonOrderEnd = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
     //локатор окна "Хотите оформить заказ?"
-    private final By confirmationWindow = By.className("Order_ModalHeader__3FDaJ");
+    private final By confirmationWindow = By.xpath(".//div[text()='Хотите оформить заказ?']");
     //локатор "Да" в окне "Хотите оформить заказ?"
     private final By buttonYesConfirmationWindow = By.xpath(".//div[@class='Order_Modal__YZ-d3']//button[text()='Да']");
     //локатор окна "Заказ оформлен"
-    private final By endConfirmationWindow = By.className("Order_Modal__YZ-d3");
+    private final By endConfirmationWindow = By.xpath(".//div[text()='Заказ оформлен']");
     //локатор кнопки "Посмотреть статус"
     private final By buttonSeeStatus = By.xpath(".//button[text()='Посмотреть статус']");
     //локатор окна статус заказа
     private final By windowTrackOrderColumns = By.className("Track_OrderColumns__2r_1F");
-
+    //локатор окна "Для кого самокат"
+    private final By windowWhoIsTheScooterFor = By.xpath(".//div[text()='Для кого самокат']");
 
 
     public void clickButtonOrderDown() {
@@ -139,6 +140,12 @@ public class OrderScooter {
         new WebDriverWait(driver, 3)
                 .until(ExpectedConditions.visibilityOfElementLocated(windowTrackOrderColumns));
         assertTrue(driver.findElement(windowTrackOrderColumns).isDisplayed());
+    }
+
+    public void checkWindowWhoIsTheScooterFor() {
+        new WebDriverWait(driver, 3)
+                .until(ExpectedConditions.visibilityOfElementLocated(windowWhoIsTheScooterFor));
+        assertTrue(driver.findElement(windowWhoIsTheScooterFor).isDisplayed());
     }
 
 }

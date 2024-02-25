@@ -1,23 +1,12 @@
-import PageObject.OrderScooter;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import page_object.OrderScooter;
+
+import java.util.Objects;
 
 @RunWith(Parameterized.class)
-public class OrderScooterTest {
-    public WebDriver getWebDriver(boolean useFirefox) {
-        if (useFirefox) {
-            return new FirefoxDriver();
-        } else {
-            return new ChromeDriver();
-        }
-    }
-    WebDriver driver = getWebDriver(false);//true для FirefoxDriver
+public class OrderScooterTest extends AncestorTest {
     private final String name;
     private final String surname;
     private final String address;
@@ -37,16 +26,6 @@ public class OrderScooterTest {
         this.comment = comment;
     }
 
-    @Before
-    public void setUp(){
-        driver.get("https://qa-scooter.praktikum-services.ru/");
-    }
-
-    @After
-    public void tearDown(){
-        driver.quit();
-    }
-
     @Parameterized.Parameters
     public static Object[][] getTestData(){
         return new Object[][] {
@@ -56,7 +35,7 @@ public class OrderScooterTest {
     }
 
     @Test
-    public void testButtonOrderUpBlack(){
+    public void testButtonOrderUp(){
         OrderScooter orderScooter = new OrderScooter(driver);
         orderScooter.clickButtonOrderUp();
         orderScooter.setName(name);
@@ -67,7 +46,11 @@ public class OrderScooterTest {
         orderScooter.clickNextButton();
         orderScooter.setDate(date);
         orderScooter.setTerm();
-        orderScooter.setColorCheckBoxBlack();
+        if(Objects.equals(name, "Артем")){
+            orderScooter.setColorCheckBoxGrey();
+        }else {
+            orderScooter.setColorCheckBoxBlack();
+        }
         orderScooter.setComment(comment);
         orderScooter.clickButtonOrderEnd();
         orderScooter.checkConfirmationWindow();
@@ -78,25 +61,10 @@ public class OrderScooterTest {
     }
 
     @Test
-    public void testButtonOrderDownGrey(){
+    public void testButtonOrderDown(){
         OrderScooter orderScooter = new OrderScooter(driver);
         orderScooter.clickButtonOrderDown();
-        orderScooter.setName(name);
-        orderScooter.setSurname(surname);
-        orderScooter.setAddress(address);
-        orderScooter.setMetro(metro);
-        orderScooter.setPhone(phone);
-        orderScooter.clickNextButton();
-        orderScooter.setDate(date);
-        orderScooter.setTerm();
-        orderScooter.setColorCheckBoxGrey();
-        orderScooter.setComment(comment);
-        orderScooter.clickButtonOrderEnd();
-        orderScooter.checkConfirmationWindow();
-        orderScooter.clickButtonYesConfirmationWindow();
-        orderScooter.checkEndConfirmationWindow();
-        orderScooter.clickButtonSeeStatus();
-        orderScooter.checkWindowTrackOrderColumns();
+        orderScooter.checkWindowWhoIsTheScooterFor();
     }
 
 }

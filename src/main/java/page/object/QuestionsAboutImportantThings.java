@@ -1,4 +1,4 @@
-package page_object;
+package page.object;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import static org.junit.Assert.assertEquals;
 
 public class QuestionsAboutImportantThings {
-    public static WebDriver driver;
+    public WebDriver driver;
 
     //конструктор класса
     public QuestionsAboutImportantThings(WebDriver driver) {

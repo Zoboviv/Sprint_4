@@ -1,7 +1,7 @@
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import page_object.QuestionsAboutImportantThings;
+import page.object.QuestionsAboutImportantThings;
 
 @RunWith(Parameterized.class)
 public class QuestionsAboutImportantThingsTest extends AncestorTest {

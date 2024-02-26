@@ -1,4 +1,4 @@
-package page_object;
+package page.object;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -7,11 +7,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import static org.junit.Assert.assertTrue;
 
 public class OrderScooter {
-    public static WebDriver driver;
+    public WebDriver driver;
 
     //конструктор класса
     public OrderScooter(WebDriver driver) {
-        OrderScooter.driver = driver;
+        this.driver = driver;
     }
 
     //локатор Заказать вверху
